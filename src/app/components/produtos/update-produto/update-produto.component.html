@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Editar Produto</h2>
+
+<form [formGroup]="produtoForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Nome do projeto</mat-label>
+    <input matInput formControlName="projectName" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Descricao</mat-label>
+    <input matInput formControlName="description" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Cliente</mat-label>
+    <mat-select formControlName="clienteId">
+      <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+        {{ cliente.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="produtoForm.get('clienteId')?.invalid && produtoForm.get('clienteId')?.touched">
+      Cliente é obrigatório.
+    </mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Data do Inicio</mat-label>
+    <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+    <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStart></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Data do Fim</mat-label>
+    <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+    <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+    <mat-datepicker #pickerEnd></mat-datepicker>
+  </mat-form-field>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="produtoForm.invalid">
+      Salvar
+    </button>
+  </div>
+</form>

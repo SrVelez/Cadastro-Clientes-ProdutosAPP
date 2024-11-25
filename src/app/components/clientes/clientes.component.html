@@ -1,0 +1,74 @@
+<div class="container">
+
+  <div class="header-product">
+    <h1>Clientes</h1>
+    <button mat-raised-button color="primary" routerLink="/clientes/create">
+      <mat-icon>add</mat-icon>
+      Criar Cliente
+    </button>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cnpj">
+      <th mat-header-cell *matHeaderCellDef> CNPJ </th>
+      <td mat-cell *matCellDef="let element"> {{element.cnpj}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> Telefone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef> Endereço </th>
+      <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <th mat-header-cell *matHeaderCellDef> Data de criação </th>
+      <td mat-cell *matCellDef="let element"> {{element.createdDate | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="openEditDialog(element)">
+          <mat-icon>edit</mat-icon>Editar
+        </button>
+        ||
+        <button mat-raised-button color="warn" (click)="openConfirmDialog(element)">
+          <mat-icon>delete</mat-icon>Excluir
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<ng-template #confirmDialog let-dialogRef>
+  <h2 mat-dialog-title>Confirmação</h2>
+  <mat-dialog-content>
+    <p>Tem certeza que deseja excluir o cliente <strong>{{ clienteSelecionado?.name }}</strong>?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Excluir</button>
+  </mat-dialog-actions>
+</ng-template>

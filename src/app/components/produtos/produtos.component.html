@@ -1,0 +1,68 @@
+<div class="container">
+
+  <div class="header-product">
+    <h1>Produtos</h1>
+    <button mat-raised-button color="accent" routerLink="/produtos/create">
+      <mat-icon>add</mat-icon>
+      Criar Produto
+    </button>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="projectName">
+      <th mat-header-cell *matHeaderCellDef> Nome do Projeto </th>
+      <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descricao </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef> Nome do Cliente </th>
+      <td mat-cell *matCellDef="let element"> {{element.cliente.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef> Data de Inicio </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDate | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef> Data do Fim </th>
+      <td mat-cell *matCellDef="let element"> {{element.endDate | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="accent" (click)="openEditDialog(element)">
+          <mat-icon>edit</mat-icon>Editar
+        </button>
+        ||
+        <button mat-raised-button color="warn" (click)="openConfirmDialog(element)">
+          <mat-icon>delete</mat-icon>Excluir
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<ng-template #confirmDialog let-dialogRef>
+  <h2 mat-dialog-title>Confirmação</h2>
+  <mat-dialog-content>
+    <p>Tem certeza que deseja excluir o produto <strong>{{ produtoSelecionado?.name }}</strong>?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Excluir</button>
+  </mat-dialog-actions>
+</ng-template>
